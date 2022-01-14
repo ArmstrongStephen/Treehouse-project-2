@@ -75,16 +75,21 @@ def balance_teams(num_players_team):
         if player['experience'] == True:
             num_experienced += 1
     experience_per_team = num_experienced / len(TEAMS)
+
     
     for team in balanced_teams:
         num_experienced = 0
         for player in cleaned_players.copy():
             if player['experience'] == True:
-                num_experienced +=1
-            if len(balanced_teams[team]) < num_players_team:
                 if num_experienced < experience_per_team:
                     balanced_teams[team].append(player)
-                    avg_height += player['height']
+                    cleaned_players.remove(player)
+                    num_experienced +=1
+
+    for team in balanced_teams:
+        for player in cleaned_players.copy():
+            if len(balanced_teams[team]) < num_players_team:
+                    balanced_teams[team].append(player)
                     cleaned_players.remove(player)
       
 
